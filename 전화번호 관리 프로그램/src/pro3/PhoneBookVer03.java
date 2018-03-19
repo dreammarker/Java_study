@@ -6,7 +6,7 @@ class PhoneInfo {
 	String name; // 이름
 	String phoneNumber;// 번호
 	String birth;  //생일
-
+	
 	public PhoneInfo(String name, String phoneNumber) {
 		 super();
 		  this.name = name; 
