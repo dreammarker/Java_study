@@ -1,26 +1,40 @@
 package pro4;
-
-class PhoneInfo {    //부모로 둔다..
+/**
+ * 추상 클래스
+ * 1. 부모역할 할 수 있다.
+ * 2. 객체생성은 안됨
+ */
+abstract class Phone{  //추상클래스.. 여러개의 메소드중 하나만 abstruct면 다 abstruct
+	final String contry="대한민국";
+	
+	 String getContry() { //완성된 메소드
+		return contry;
+	}
+	abstract void showPhoneInfo(); //미완성된 메소드를 한개라도 가지고있다면
+	//미완성된것을 오브abstract 라고한다.
+	//비워둔이유 어차피 자식 클래스에서 재정의해서 사용
+}
+ class PhoneInfo extends Phone{    //부모로 둔다..
 	String name; // 이름
 	String phoneNumber;// 번호
 	String birth;  //생일
 	
 	public PhoneInfo(String name, String phoneNumber) {
-		 super();
+//		 super(); 컴파일러가 자동으로 삽입해준다.
 		  this.name = name; 
 		  this.phoneNumber = phoneNumber;
 //		this(name, phoneNumber, null);// 생성자안에서만 사용가능.다른 생성자 호출할때
 	}
 
 	public PhoneInfo(String name, String phoneNumber, String birth) {
-		super();
+//		super();
 		this.name = name;
 		this.phoneNumber = phoneNumber;
 		this.birth = birth;
 	}
 
-
-	public void showPhoneInfo() {
+//final 붙이면 재정의 불가
+       void showPhoneInfo() {
 		System.out.println("name: " + name);
 		System.out.println("phone: " + phoneNumber);
 
@@ -49,13 +63,17 @@ class PhoneUnivInfo extends PhoneInfo
 
 	@Override
 	public void showPhoneInfo() {
+		super.showPhoneInfo(); //부모의 메소드 호출(재사용)
+		System.out.println("major: " + major);
+		System.out.println("year: " + year);
+	}
+/*	void showPhoneInfo_Uni() {
 		// TODO 자동 생성된 메소드 스텁
 		super.showPhoneInfo(); //부모의 메소드 호출(재사용)
 		System.out.println("major: " + major);
 		System.out.println("year: " + year);
 	}
-	 
-}
+*/}
 class PhoneCompanyInfo extends PhoneInfo
 {
 	String company; //회사명
@@ -75,7 +93,12 @@ class PhoneCompanyInfo extends PhoneInfo
 		super.showPhoneInfo();
 		System.out.println("company: " + company);
 	}
-	
+/*	@Override
+	public void showPhoneInfo_Company() {
+		super.showPhoneInfo();
+		System.out.println("company: " + company);
+	}
+*/
 }
 public class PhoneBookManager {
 //	final int MAX_CNT ; // 최초의 1번은 초기화(바로 값 입력 또는 생성자를 통해서 초기화) 100개
@@ -180,8 +203,23 @@ public class PhoneBookManager {
 		}
 		else
 		{
+			/***메소드를 정의 했을때***/
 			i[dataIdx].showPhoneInfo();
 			System.out.println("데이터 검색이 완료되었습니다. \n");
+		/***메소드를 재정의 되지 않았을때***/
+			
+		/*	i[dataIdx].showPhoneInfo();
+			((PhoneUnivInfo)i[dataIdx]).showPhoneInfo_Uni();
+			((PhoneCompanyInfo)i[dataIdx]).showPhoneInfo_Company();
+		*/
+			
+	/*	if(i[dataIdx] instanceof PhoneUnivInfo)  //마지막 자식부터...
+			((PhoneUnivInfo)i[dataIdx]).showPhoneInfo_Uni();
+		else if(i[dataIdx] instanceof PhoneCompanyInfo)
+			((PhoneCompanyInfo)i[dataIdx]).showPhoneInfo_Company();
+		else
+			i[dataIdx].showPhoneInfo();
+		*/
 		}
 	}
 	
@@ -220,3 +258,4 @@ public class PhoneBookManager {
 	}
 	
 }
+
