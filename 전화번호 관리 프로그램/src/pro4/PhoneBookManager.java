@@ -72,7 +72,7 @@ class PhoneUnivInfo extends PhoneInfo
 		super.showPhoneInfo(); //부모의 메소드 호출(재사용)
 		System.out.println("major: " + major);
 		System.out.println("year: " + year);
-	}
+	
 */}
 class PhoneCompanyInfo extends PhoneInfo
 {
@@ -174,13 +174,13 @@ public class PhoneBookManager {
 		PhoneInfo info=null;
 		switch(choice) 
 		{
-			case 1:
+			case INPUT_SELECT.NORMAL:
 				info=readFriendInfo();
 				break;
-			case 2:
+			case INPUT_SELECT.UNIV:
 				info=readUnivFriendInfo();
 				break;
-			case 3:
+			case INPUT_SELECT.COMPANY:
 				info=readCompanyFriendInfo();
 				break;
 		}
