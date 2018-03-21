@@ -162,30 +162,46 @@ public class PhoneBookManager {
 		if("0".equals(birth)) return  new PhoneCompanyInfo(name,phone,company);
 		else return new PhoneCompanyInfo(name, phone, birth,company);
 	}
-	public void inputData() {
-		System.out.println("데이터 입력을 시작합니다");
+	public void inputData() throws MenuChoiceException {
+		try {
+			if(curCnt==i.length){
+				throw new PhoneSizeException();
+			}
+			
+			System.out.println("데이터 입력을 시작합니다");
 
-		System.out.println("1. 일반, 2. 대학, 3. 회사");
-		System.out.println("선택>> ");
-		int choice=MenuViewer.sc.nextInt();
-		MenuViewer.sc.nextLine();
-			// 콘솔창에서는 null입력 불가하므로 ("0":생년월일이 업다)로 가정
-		// int b=Integer.parseInt(birth);
-		PhoneInfo info=null;
-		switch(choice) 
-		{
-			case INPUT_SELECT.NORMAL:
-				info=readFriendInfo();
-				break;
-			case INPUT_SELECT.UNIV:
-				info=readUnivFriendInfo();
-				break;
-			case INPUT_SELECT.COMPANY:
-				info=readCompanyFriendInfo();
-				break;
+			System.out.println("1. 일반, 2. 대학, 3. 회사");//1 2 3   /4,-1(예외객체 생성)
+			System.out.println("선택>> ");
+			int choice=MenuViewer.sc.nextInt();
+			MenuViewer.sc.nextLine();
+				// 콘솔창에서는 null입력 불가하므로 ("0":생년월일이 업다)로 가정
+			// int b=Integer.parseInt(birth);
+			
+			
+			if(choice<INPUT_SELECT.NORMAL|choice>INPUT_SELECT.COMPANY)
+				throw new MenuChoiceException(choice);
+			PhoneInfo info=null;
+			
+			switch(choice) 
+			{
+				case INPUT_SELECT.NORMAL:
+					info=readFriendInfo();
+					break;
+				case INPUT_SELECT.UNIV:
+					info=readUnivFriendInfo();
+					break;
+				case INPUT_SELECT.COMPANY:
+					info=readCompanyFriendInfo();
+					break;
+			}
+			i[curCnt++]=info;
+			System.out.println("데이터 입력이 완료 되었습니다.\n");
+		} catch (PhoneSizeException e) {
+			// TODO 자동 생성된 catch 블록
+			System.out.println(e.getMessage());
+			System.out.println("프로그램  종료");
+			return;
 		}
-		i[curCnt++]=info;
-		System.out.println("데이터 입력이 완료 되었습니다.\n");
 	}
 
 
